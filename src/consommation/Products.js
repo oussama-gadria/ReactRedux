@@ -1,9 +1,12 @@
 
 import { useEffect, useState } from 'react';
 import { Alert, Col, Container, Row } from "react-bootstrap";
+import { useDispatch } from 'react-redux';
+import { deleteproductReducer } from '../redux/slices/productsSlice';
 import {deleteProduct, getallProducts} from "../services/api"
 import Product from './Product';
 function Products() {
+  const dispatch=useDispatch();
   const [products,setProducts] = useState([]);
   const [show,setShow] =useState(false);
   const [visible,setVisible] =useState(false);
@@ -20,7 +23,7 @@ const getProducts = async () => {
 const deleteProd = async (id) => {
   const result = window.confirm("Are you sure you want to delete?");
 if (result) {
-  await deleteProduct(id);
+  dispatch(deleteproductReducer(id))
   getProducts(); }
 }
   useEffect(()=>

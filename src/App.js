@@ -10,11 +10,14 @@ const NotFound = React.lazy(()=> import('./Components/NotFound'))
 const NavbarComponent = React.lazy(()=> import('./Components/NavBarComponent'))
 const ProductDetails = React.lazy(()=> import('./Components/ProductDetails'))
 */ 
+import {useDispatch} from "react-redux";
 import ProductDetailsApi from "./consommation/ProductDetailsApi";
 import AddProduct from "./consommation/AddProduct";
 import UpdateProduct from "./consommation/UpdateProduct";
+import { fetchProducts } from "./redux/slices/productsSlice";
 
 function App() {
+  const dispatch =  useDispatch() 
   return (
     <>
       {/* <h1> Invoquer un service Web à partir d'un composant de classe</h1>
@@ -26,7 +29,7 @@ function App() {
       <Routes>
         <Route path="/products">
           <Route path="add" replace={true} element={<AddProduct />} />
-          <Route path="list" element={<ProductsFunc />} />
+          <Route path="list" element={<ProductsFunc />} npm loader={dispatch(fetchProducts())} />
           <Route path="update/:id" element={<UpdateProduct />} />
           <Route path=":id/:like" element={<ProductDetailsApi />} />
         </Route>

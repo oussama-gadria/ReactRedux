@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { selectProduct, unselectedPoduct, updateproductReducer } from "../redux/slices/productsSlice";
 import { editProduct, getallProducts } from "../services/api";
 
 export default function UpdateProduct() {
+  const dispatch=useDispatch();
   const navigate = useNavigate();
   const param = useParams();
   const [product, setProduct] = useState({
@@ -33,9 +36,10 @@ export default function UpdateProduct() {
     setProduct({ ...product, [e.target.name]: e.target.files[0].name });
   };
   const UpdateP = async () => {
-    const res = await editProduct(param.id, product);
-    console.log(res);
-    if (res.status === 200) navigate("/products/list");
+    dispatch(selectProduct(param.id)); 
+    dispatch(updateproductReducer(product));
+    navigate("/products/list");
+    dispatch(unselectedPoduct());
   };
   return (
     <>

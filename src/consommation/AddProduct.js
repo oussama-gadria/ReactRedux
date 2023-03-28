@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../services/api";
+import { useDispatch, useSelector } from "react-redux";
+import { addproductReducer } from "../redux/slices/productsSlice";
 function AddProduct() {
   const navigate = useNavigate();
+  const dispatch=useDispatch()
   const [newproduct, setNewProduct] = useState({
     name: "",
     price: 0,
@@ -13,9 +16,8 @@ function AddProduct() {
     description: "",
   });
 
-  const handleSubmit = async () => {
-    const res = await addProduct(newproduct);    
- 
+  const handleSubmit = () => {
+  dispatch(addproductReducer(newproduct)) 
   };
   const handleChange = (e) => {
     setNewProduct({ ...newproduct, [e.target.name]: e.target.value });
@@ -81,7 +83,7 @@ function AddProduct() {
             name="img"
           />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={() => handleSubmit()}>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
           Add Product
         </Button>
         <Button onClick={() => navigate("/products/list")} variant="secondary">

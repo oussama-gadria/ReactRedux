@@ -1,12 +1,15 @@
-import products from "../products.json"; 
 import ProductFunc from './ProductFun';
 import { Container ,Row ,Col } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
- 
+import { useDispatch, useSelector } from "react-redux";
+
 function ProductsFunc () {
+  const dispatch=useDispatch();
   const [show,setShow] =useState(false);
   const [visible,setVisible] =useState(false);
+  const products=useSelector((state)=>state.products.products);
+  console.log(products)
   useEffect(()=>
   {
     console.log("products = "+products)
